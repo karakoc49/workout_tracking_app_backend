@@ -104,7 +104,6 @@ WSGI_APPLICATION = 'workout_planner.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 if env("ENV") == "DEV":
-
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
