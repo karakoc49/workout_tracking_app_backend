@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: pg-django
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: molly
+      POSTGRES_DB: workout_planner_db
+    volumes:
+      - ./db/postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    ports:
+      - "8080:80"  # You can change this port if needed
+    environment:
+      PGADMIN_DEFAULT_EMAIL: haluk.mkarakoc@gmail.com  # Replace with your email
+      PGADMIN_DEFAULT_PASSWORD: molly  # Set a strong password
+
+volumes:
+  postgres_data:
