@@ -39,6 +39,32 @@ class WorkoutApiView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    def put(self, request):
+        workout_id = request.query_params.get('id')
+        data = request.data
+
+        try:
+            workout = Workout.objects.get(pk=workout_id)
+        except Workout.DoesNotExist:
+            return Response({'error': 'Workout not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = WorkoutSerializer(workout, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request):
+        workout_id = request.query_params.get('id')
+
+        try:
+            workout = Workout.objects.get(pk=workout_id)
+        except Workout.DoesNotExist:
+            return Response({'error': 'Workout not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        workout.delete()
+        return Response({'message': 'Workout deleted'}, status=status.HTTP_204_NO_CONTENT)
+    
 class WorkoutExerciseApiView(APIView):
     def get(self, request):
         workout_exercise_id = request.query_params.get('id')
@@ -69,3 +95,29 @@ class WorkoutExerciseApiView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request):
+        workout_exercise_id = request.query_params.get('id')
+        data = request.data
+
+        try:
+            workout_exercise = WorkoutExercise.objects.get(pk=workout_exercise_id)
+        except WorkoutExercise.DoesNotExist:
+            return Response({'error': 'WorkoutExercise not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = WorkoutExerciseSerializer(workout_exercise, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request):
+        workout_exercise_id = request.query_params.get('id')
+
+        try:
+            workout_exercise = WorkoutExercise.objects.get(pk=workout_exercise_id)
+        except WorkoutExercise.DoesNotExist:
+            return Response({'error': 'WorkoutExercise not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        workout_exercise.delete()
+        return Response({'message': 'WorkoutExercise deleted'}, status=status.HTTP_204_NO_CONTENT)
