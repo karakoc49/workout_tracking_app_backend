@@ -9,7 +9,7 @@ class Workout(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     description = models.TextField()
-    workout_image_url = models.CharField(null=False, blank=True, default='')
+    workout_image_url = models.CharField(null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
 class WorkoutExercise(models.Model):
