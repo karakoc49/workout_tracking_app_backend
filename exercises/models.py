@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator 
 
 # Create your models here.
 
@@ -9,6 +10,7 @@ class Exercise(models.Model):
     muscle_group = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    order = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
 
     def __str__(self):
         return self.name

@@ -27,37 +27,37 @@ class ExerciseApiView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
 
     
-    def post(self, request, *args, **kwargs):
-        data = request.data
+    # def post(self, request, *args, **kwargs):
+    #     data = request.data
 
-        serializer = ExerciseSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #     serializer = ExerciseSerializer(data=data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def put(self, request):
-        exercise_id = request.query_params.get('id')
-        data = request.data
+    # def put(self, request):
+    #     exercise_id = request.query_params.get('id')
+    #     data = request.data
 
-        try:
-            exercise = Exercise.objects.get(pk=exercise_id)
-        except Exercise.DoesNotExist:
-            return Response({'error': 'Exercise not found'}, status=status.HTTP_404_NOT_FOUND)
+    #     try:
+    #         exercise = Exercise.objects.get(pk=exercise_id)
+    #     except Exercise.DoesNotExist:
+    #         return Response({'error': 'Exercise not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = ExerciseSerializer(exercise, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #     serializer = ExerciseSerializer(exercise, data=data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_200_OK)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def delete(self, request):
-        exercise_id = request.query_params.get('id')
+    # def delete(self, request):
+    #     exercise_id = request.query_params.get('id')
 
-        try:
-            exercise = Exercise.objects.get(pk=exercise_id)
-        except Exercise.DoesNotExist:
-            return Response({'error': 'Exercise not found'}, status=status.HTTP_404_NOT_FOUND)
+    #     try:
+    #         exercise = Exercise.objects.get(pk=exercise_id)
+    #     except Exercise.DoesNotExist:
+    #         return Response({'error': 'Exercise not found'}, status=status.HTTP_404_NOT_FOUND)
         
-        exercise.delete()
-        return Response({'message': 'Exercise deleted'}, status=status.HTTP_204_NO_CONTENT)
+    #     exercise.delete()
+    #     return Response({'message': 'Exercise deleted'}, status=status.HTTP_204_NO_CONTENT)

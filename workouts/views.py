@@ -100,8 +100,16 @@ class WorkoutExerciseApiView(APIView):
 
         serializer = WorkoutExerciseSerializer(data=data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            # Save the serializer instance to get the created object
+            instance = serializer.save()
+
+            # Get the ID of the created object
+            created_id = instance.id
+
+            # Include the ID in the response data
+            response_data = serializer.data
+            response_data['id'] = created_id
+            return Response(response_data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request):
